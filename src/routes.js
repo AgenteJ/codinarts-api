@@ -15,5 +15,16 @@ routes.get("/contact/:id", contact.findAll);
 routes.put("/contact/:id", contact.update);
 routes.delete("/contact/:id", contact.delete);
 
+const adress = require("./controller/adress.js");
+routes.post("/adress/add", adress.create);
+routes.get("/adress/:id", adress.findAll);
+routes.put("/adress/:id", adress.update);
+routes.delete("/adress/:id", adress.delete);
+
+const guest = require("./controller/guest.js");
+routes.post("/guest/add", guest.create);
+routes.get("/guest/:id", guest.findAll);
+routes.put("/guest/:id", guest.update);
+routes.delete("/guest/:id", guest.delete);
 
 module.exports = routes;

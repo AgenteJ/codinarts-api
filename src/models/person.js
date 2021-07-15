@@ -1,7 +1,7 @@
 
 'use strict';
 module.exports = function (sequelize, Sequelize) {
-  return sequelize.define("person", {
+  return  sequelize.define("person", {
     cpf: {
       primaryKey: true,
       type: Sequelize.STRING(100)

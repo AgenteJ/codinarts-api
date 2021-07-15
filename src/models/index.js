@@ -1,7 +1,11 @@
+'use strict';
 const Sequelize = require("sequelize");
 const dotenv = require('dotenv');
 const person = require("./person.js");
 const contact = require("./contact.js")
+const adress = require("./adress.js")
+const guest = require("./guest.js")
+
 dotenv.config();
 
 const sequelize = new Sequelize(
@@ -22,6 +26,9 @@ const db = {Sequelize, sequelize};
 
 db.person =  person(sequelize, Sequelize);
 db.contact = contact(sequelize, Sequelize);
+db.adress = adress(sequelize, Sequelize);
+db.guest = guest(sequelize, Sequelize);
+
   
 module.exports = db;  
   

@@ -1,7 +1,11 @@
-
 'use strict';
 module.exports = function (sequelize, Sequelize) {
     return sequelize.define("contact", {
+        id: {
+            type: Sequelize.INTEGER,
+            autoIncrement: true,
+            primaryKey: true
+        },
         name: {
             type: Sequelize.STRING(100)
         },

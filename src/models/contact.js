@@ -15,11 +15,13 @@ module.exports = function (sequelize, Sequelize) {
         personCpf: {
             type: Sequelize.STRING(100),
             allowNull: false,
+            onDelete: 'cascade',
             references: {         // User hasMany WorkingDays n:n
                 model: {
                     tableName: 'person',
                 },
-                key: 'cpf'
+                key: 'cpf',
+                
             }
         },
     }, {

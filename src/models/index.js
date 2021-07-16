@@ -8,27 +8,42 @@ const guest = require("./guest.js")
 
 dotenv.config();
 
-const sequelize = new Sequelize(
-  process.env.DB_DATABASE,
+const temp = new Sequelize(
+  "",
   process.env.DB_USER,
   process.env.DB_PASSWORD, {
   host: process.env.DB_HOST,
-  dialect: process.env.DB_DIALECT 
+  dialect: process.env.DB_DIALECT
 });
 
-sequelize.authenticate().then(() => {
-  console.log('Connected!');
-}).catch(err => {
-  console.error('Not connected.', err);
-});
+module.exports = (async function () {
+  return await temp.query(`CREATE DATABASE IF NOT EXISTS \`${process.env.DB_DATABASE}\`;`).then(() => {
 
-const db = {Sequelize, sequelize};
+    const sequelize = new Sequelize(
+      process.env.DB_DATABASE,
+      process.env.DB_USER,
+      process.env.DB_PASSWORD, {
+      host: process.env.DB_HOST,
+      dialect: process.env.DB_DIALECT
+    });
 
-db.person =  person(sequelize, Sequelize);
-db.contact = contact(sequelize, Sequelize);
-db.adress = adress(sequelize, Sequelize);
-db.guest = guest(sequelize, Sequelize);
+    sequelize.authenticate().then(() => {
+      console.log('Connected!');
+    }).catch(err => {
+      console.error('Not connected.', err);
+    });
 
-  
-module.exports = db;  
-  
+    const db = { Sequelize, sequelize };
+
+    db.person = person(sequelize, Sequelize);
+    db.contact = contact(sequelize, Sequelize);
+    db.adress = adress(sequelize, Sequelize);
+    db.guest = guest(sequelize, Sequelize);
+
+    sequelize.sync().then(() => {
+      console.log("------------------------------- sync---------------------------");
+    });
+    return db;
+  });
+
+})();

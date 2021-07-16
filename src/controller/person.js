@@ -1,5 +1,11 @@
-const db = require("../models");
-const Op = db.Sequelize.Op;
+let db;
+let Op;
+init();
+
+async function init() {
+    db = await require("../models");
+    Op = await db.Sequelize.Op;
+}
 
 exports.create = (req, res) => {
     const { name, cpf, dataNasc } = req.body
@@ -22,10 +28,11 @@ exports.create = (req, res) => {
 
 exports.findAll = (req, res) => {
     const name = req.query.name;
-    var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
 
-    db.person.findAll({ where: condition }).then(data => { 
-        res.send(data); 
+    // var condition = name ? { name: { [Op.like]: `%${name}%` } } : null;
+
+    db.person.findAll({ where: null }).then(data => {
+        res.send(data);
     }).catch(err => {
         res.status(500).send({
             message:
@@ -37,7 +44,7 @@ exports.findAll = (req, res) => {
 
 exports.findOne = (req, res) => {
     const cpf = req.params.cpf;
-    
+
     return db.person.findByPk(cpf).then(data => {
         res.status(200).send(data);
     }).catch(() => {
@@ -46,6 +53,21 @@ exports.findOne = (req, res) => {
         });
     });
 
+};
+
+exports.findMoreAdress = (req, res) => {
+    const qr = "SELECT person.name, COUNT(adress.id) AS Total FROM person LEFT JOIN adress ON person.cpf = adress.personCpf GROUP BY person.name";
+    db.sequelize.query(qr, {type: db.sequelize.QueryTypes.SELECT})
+        .then(data => {
+            const max = Math.max.apply(Math, data.map(function(o) { return o.Total }));
+            const obj = data.find(d => d.Total = max);
+            res.status(200).send(obj);
+        }).catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving people."
+            });
+        });
 };
 
 exports.update = (req, res) => {

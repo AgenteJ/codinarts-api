@@ -1,6 +1,11 @@
-const db = require("../models");
-const Op = db.Sequelize.Op;
-const sql = db.adress;
+let db;
+let sql;
+init();
+
+async function init() {
+    db = await require("../models");
+    sql = await db.adress;
+}
 
 exports.create = (req, res) => {
     req.body.personCpf = req.body.personCpf.replace(/\D/g, "");
@@ -10,7 +15,7 @@ exports.create = (req, res) => {
 
     } catch (error) {
         return res.status(400).send(error)
-    }
+    } 
 };
 
 exports.findAll = (req, res) => {

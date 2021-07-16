@@ -1,6 +1,11 @@
-const db = require("../models");
-const Op = db.Sequelize.Op;
-const sql = db.contact;
+let db;
+let sql;
+init();
+
+async function init() {
+    db = await require("../models");
+    sql = await db.contact;
+}
 
 exports.create = (req, res) => {
     const { name, contato } = req.body
@@ -37,11 +42,26 @@ exports.findAll = (req, res) => {
 };
 
 
+exports.total = (req, res) => {
+    console.log("entroi")
+    const qr = "select count(*) as total from contact;";
+    db.sequelize.query(qr, { type: db.sequelize.QueryTypes.SELECT })
+        .then(data => {
+            res.status(200).send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving people."
+            });
+        });
+};
+
+
 exports.update = (req, res) => {
     const id = req.params.id.replace(/\D/g, "");
-    const {name, contato} = req.body;
+    const { name, contato } = req.body;
     const contact = contato;
-    sql.update({name, contact}, {
+    sql.update({ name, contact }, {
         where: { id: id }
     }).then(num => {
         if (num == 1) {

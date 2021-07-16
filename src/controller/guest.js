@@ -1,6 +1,11 @@
-const db = require("../models");
-const Op = db.Sequelize.Op;
-const sql = db.guest;
+let db;
+let sql;
+init();
+
+async function init() {
+    db = await require("../models");
+    sql = await db.guest;
+}
 
 exports.create = (req, res) => {
     req.body.adressId = req.body.adressId.replace(/\D/g, "");
@@ -27,11 +32,26 @@ exports.findAll = (req, res) => {
         });
 };
 
+exports.moreGuest = (req, res) => {
+    const qr = "SELECT adress.name, COUNT(guest.cpf) AS Total FROM adress LEFT JOIN guest ON adress.id = guest.adressId GROUP BY adress.name";
+    db.sequelize.query(qr, { type: db.sequelize.QueryTypes.SELECT })
+        .then(data => {
+            const max = Math.max.apply(Math, data.map(function (o) { return o.Total }));
+            const obj = data.find(d => d.Total = max);
+            res.status(200).send(obj);
+        }).catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while retrieving people."
+            });
+        });
+};
+
 
 exports.update = (req, res) => {
     const id = req.params.id.replace(/\D/g, "");
-    const { name, dataNasc, adress} = req.body;
-    sql.update({ name, dataNasc, adress}, {
+    const { name, dataNasc, adress } = req.body;
+    sql.update({ name, dataNasc, adress }, {
         where: { cpf: id }
     }).then(num => {
         if (num == 1) {

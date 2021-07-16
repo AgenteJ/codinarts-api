@@ -14,6 +14,7 @@ module.exports = function (sequelize, Sequelize) {
         adressId: {
             type: Sequelize.INTEGER,
             allowNull: false,
+            onDelete: 'cascade',
             references: {        
                 model: {
                     tableName: 'adress',

@@ -34,6 +34,7 @@ module.exports =  function (sequelize, Sequelize) {
         personCpf: {
             type: Sequelize.STRING(100),
             allowNull: false,
+            onDelete: 'cascade',
             references: {        
                 model: {
                     tableName: 'person',

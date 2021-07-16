@@ -11,7 +11,7 @@ Bem-vindo(a) ao sistema de cadastro de clientes
 
 ## Para iniciar, siga as instruções abaixo:
 
-#### 1. Criando e configurando arquivo .env
+#### 1. Cire e configure arquivo .env:
 
 <h1 align="center">
   <img alt="NextLevelWeek" title="#NextLevelWeek" src="./src/assets/env.jpeg" />
@@ -25,3 +25,14 @@ $ npm install
 ```
 $ npm start
 ```
+
+
+
+## Ferramentas
+
+1. cors
+2. dotenv
+3. express
+4. mysql2
+5. nodemon
+6. sequelize

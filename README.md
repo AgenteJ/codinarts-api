@@ -1,5 +1,5 @@
 # codinarts-api
-Sistema de cadastro de clientes
+Bem-vindo(a) ao sistema de cadastro de clientes
 
 ### Features
 
@@ -7,20 +7,21 @@ Sistema de cadastro de clientes
 - [x] Crud de Contatos
 - [x] Crud de Endereços
 - [x] Crud de Inquilinos
+- [x] Relatórios
 
 ## Para iniciar, siga as instruções abaixo:
 
-#### Instalação:
+#### 1. Criando e configurando arquivo .env
+
+<h1 align="center">
+  <img alt="NextLevelWeek" title="#NextLevelWeek" src="./src/assets/env.jpeg" />
+</h1>
+
+#### 2. Instalação:
 ```
 $ npm install
 ```
-#### Iniciar:
+#### 3. Iniciar:
 ```
 $ npm start
 ```
-
-<h1 align="center">
-  <img alt="NextLevelWeek" title="#NextLevelWeek" src="./src/assets/banco.png" />
-</h1>
-
-npm install

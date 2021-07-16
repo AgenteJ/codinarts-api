@@ -47,7 +47,7 @@ exports.total = (req, res) => {
     const qr = "select count(*) as total from contact;";
     db.sequelize.query(qr, { type: db.sequelize.QueryTypes.SELECT })
         .then(data => {
-            res.status(200).send(data);
+            res.status(200).send(data[0].total + "");
         }).catch(err => {
             res.status(500).send({
                 message:

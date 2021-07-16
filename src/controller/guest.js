@@ -36,9 +36,7 @@ exports.moreGuest = (req, res) => {
     const qr = "SELECT adress.name, COUNT(guest.cpf) AS Total FROM adress LEFT JOIN guest ON adress.id = guest.adressId GROUP BY adress.name";
     db.sequelize.query(qr, { type: db.sequelize.QueryTypes.SELECT })
         .then(data => {
-            const max = Math.max.apply(Math, data.map(function (o) { return o.Total }));
-            const obj = data.find(d => d.Total = max);
-            res.status(200).send(obj);
+            res.status(200).send(data);
         }).catch(err => {
             res.status(500).send({
                 message:

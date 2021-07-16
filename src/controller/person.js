@@ -59,9 +59,7 @@ exports.findMoreAdress = (req, res) => {
     const qr = "SELECT person.name, COUNT(adress.id) AS Total FROM person LEFT JOIN adress ON person.cpf = adress.personCpf GROUP BY person.name";
     db.sequelize.query(qr, {type: db.sequelize.QueryTypes.SELECT})
         .then(data => {
-            const max = Math.max.apply(Math, data.map(function(o) { return o.Total }));
-            const obj = data.find(d => d.Total = max);
-            res.status(200).send(obj);
+            res.status(200).send(data);
         }).catch(err => {
             res.status(500).send({
                 message:
